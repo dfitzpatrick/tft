@@ -3,14 +3,17 @@ from __future__ import annotations
 import logging
 import os
 import sys
-import typing as t
 from logging import StreamHandler, FileHandler
+
+BASE_DIR = os.path.normpath(os.path.dirname(os.path.realpath(__file__)))
 handler_console = StreamHandler(stream=sys.stdout)
 handler_console.setLevel(logging.DEBUG)
-
+handler_filestream = FileHandler(filename=f"{BASE_DIR}/bot.log", encoding='utf-8')
+handler_filestream.setLevel(logging.INFO)
 
 logging_handlers = [
         handler_console,
+        handler_filestream
 ]
 
 logging.basicConfig(
