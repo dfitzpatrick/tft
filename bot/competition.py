@@ -30,7 +30,7 @@ class CompetitionCog(ConfigMixin, commands.Cog):
         self._task: Optional[asyncio.Task] = None
         self.guild_map: Dict[str, MessageInfo] = {}
 
-    def _task_callback(future: asyncio.Future):
+    def _task_callback(self, future: asyncio.Future):
         if future.exception():
             raise future.exception()
 
