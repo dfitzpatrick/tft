@@ -123,7 +123,7 @@ class CompetitionCog(ConfigMixin, commands.Cog):
         if not self._task.done():
             self._task.cancel()
 
-    @commands.has_permissions(manage_channels=True)
+    @commands.has_role("Admin")
     @commands.command(name='competition')
     async def competition_cmd(self, ctx: commands.Context):
         """Fetches the Top 10 Leaderboard information from The Funded Trader"""
