@@ -32,7 +32,7 @@ class LeaderboardCog(ConfigMixin, commands.Cog):
         self.guild_map: Dict[str, MessageInfo] = {}
         self.first_run = True
 
-    def _task_callback(future: asyncio.Future):
+    def _task_callback(self, future: asyncio.Future):
         if future.exception():
             raise future.exception()
 
@@ -134,7 +134,7 @@ class LeaderboardCog(ConfigMixin, commands.Cog):
         if not self._task.done():
             self._task.cancel()
 
-    @commands.has_permissions(manage_channels=True)
+    @commands.has_role("Admin")
     @commands.command(name='leaderboard')
     async def leaderboard_cmd(self, ctx: commands.Context):
         """Fetches the Top 10 Leaderboard information from The Funded Trader"""
