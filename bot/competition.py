@@ -71,7 +71,12 @@ class CompetitionCog(ConfigMixin, commands.Cog):
             del self.config_settings[str(guild_id)]
             self.save_settings()
             return
-        await message.edit(embed=embed)
+        try:
+            await message.edit(embed=embed)
+        except discord.NotFound:
+            del self.config_settings[str(guild_id)]
+            self.save_settings()
+
 
     async def update(self):
         """Fetches HTML from TFT and parses it, and generates an embed."""

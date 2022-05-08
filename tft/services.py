@@ -107,11 +107,6 @@ def make_leaderboard_embed(entries: List[LeaderboardEntry]) -> discord.Embed:
     table = markdown_syntax("css", table)
     embed = discord.Embed(title=f"The Funded Trader Leaderboard", description=table)
     embed.set_image(url='https://leaderboard.thefundedtraderprogram.com/images/TFT_Logo_Small.png')
-
-    td = last_day_of_month(today) - today
-    remaining = friendly_time_delta(td)
-    remaining = markdown_syntax("fix", remaining or "Last Day")
-    embed.add_field(name=":clock1: Time Remaining", value=remaining, inline=False)
     embed.add_field(name=":trophy: Current Leader", value=leader, inline=False)
     embed.add_field(name=":moneybag: King's/Queen's Profits", value=markdown_syntax("fix", entries[0].profit), inline=False)
     embed.timestamp = datetime.now(timezone.utc)
