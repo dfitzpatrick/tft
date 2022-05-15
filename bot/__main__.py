@@ -9,6 +9,7 @@ log = logging.getLogger(__name__)
 extensions = (
     'bot.leaderboard',
     'bot.competition',
+    'bot.cronannouncements.cog'
 )
 
 
