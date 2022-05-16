@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-@dataclass(slots=True)
+@dataclass
 class Announcement:
     crontab_fmt: str
     guild_id: int
