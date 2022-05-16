@@ -49,6 +49,7 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
     async def announcements(self, ctx):
         pass
 
+    @commands.has_role("Admin")
     @announcements.command()
     async def reloadall(self, ctx: commands.Context):
         self.announcements = self._load_announcements_from_file()
@@ -56,6 +57,7 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
         self.start_all_jobs()
         await ctx.send("All guild jobs reloaded and restarted")
 
+    @commands.has_role("Admin")
     @announcements.command()
     async def reload(self, ctx: commands.Context):
         self.announcements = self._load_announcements_from_file()
