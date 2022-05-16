@@ -1,18 +1,13 @@
-import asyncio
 import json
-from copy import deepcopy
+import logging
 from json import JSONDecodeError
 from pathlib import Path
+from typing import Dict, List, Set
 
 import aiocron
 from discord.ext import commands
-from discord import app_commands
-from typing import Dict, List, TypeAlias, Set
-import logging
+
 from bot.cronannouncements.schema import Announcement
-
-AnnouncementStorage: TypeAlias = Dict[int, List[Announcement]]
-
 from mixins.config import ConfigMixin
 
 log = logging.getLogger(__name__)
