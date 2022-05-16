@@ -26,34 +26,60 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
         self.jobs: Dict[int, Set[aiocron.Cron]] = {}
         self.path = path
         self.filename = filename
-        self.announcements = {}
+        self.announcements: List[Announcement] = []
 
     async def cog_load(self) -> None:
-        await self.start_all_jobs()
+        try:
+            self.start_all_jobs()
+        except FileNotFoundError:
+            log.warning(f"No Announcement Jobs started. Missing announcements file {self.path / self.filename}")
 
     async def cog_unload(self) -> None:
         for guild_id in self.jobs.keys():
             self.stop_jobs(guild_id)
 
-    async def start_all_jobs(self):
+    def start_all_jobs(self):
         if not self.announcements:
             self.announcements = self._load_announcements_from_file()
         self.start_jobs(*self.announcements)
+
+    def stop_all_jobs(self):
+        for guild_id, seq in self.jobs.items():
+            for task in seq:
+                log.info(f"Stopping Guild {guild_id} Job {task.uuid}")
+                task.stop()
+        self.jobs = {}
 
     @commands.group(name='announcements')
     async def announcements(self, ctx):
         pass
 
     @announcements.command()
+    async def reloadall(self, ctx: commands.Context):
+        self.announcements = self._load_announcements_from_file()
+        self.stop_all_jobs()
+        self.start_all_jobs()
+        await ctx.send("All guild jobs reloaded and restarted")
+
+    @announcements.command()
     async def reload(self, ctx: commands.Context):
         self.announcements = self._load_announcements_from_file()
-        self.restart_jobs(ctx.guild.id)
+        jobs = [j for j in self.announcements if j.guild_id == ctx.guild.id]
+        guild_id = ctx.guild.id
+        self.stop_jobs(guild_id)
+        self.start_jobs(*jobs)
+        await ctx.send("This guild jobs reloaded and restarted")
 
     @reload.error
+    @reloadall.error
     async def reload_error(self, ctx, error):
         exception = error.original
         if isinstance(exception, JSONDecodeError):
             await ctx.send("JSON file is not properly formatted")
+        if isinstance(exception, FileNotFoundError):
+            await ctx.send("No Announcement file to reload jobs from")
+        else:
+            raise error
 
     def _load_announcements_from_file(self) -> List[Announcement]:
         filename = self.path / self.filename
@@ -81,6 +107,7 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
         log.info(f"Stopped All Jobs for Guild {guild_id}")
 
     def _start_job(self, announcement: Announcement):
+        log.debug("in start job")
         job = aiocron.Cron(announcement.crontab_fmt, self.make_announcement, args=(announcement,), start=True)
         self._add_job(announcement.guild_id, job)
         log.info("Starting CRON Job {} for Guild {} / Channel {}".format(
