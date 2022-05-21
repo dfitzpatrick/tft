@@ -1,10 +1,14 @@
+import asyncio
 import json
 import logging
+from functools import partial
 from json import JSONDecodeError
 from pathlib import Path
 from typing import Dict, List, Set
 
 import aiocron
+import aiohttp
+from croniter import CroniterBadCronError
 from discord.ext import commands
 
 from bot.cronannouncements.schema import Announcement
@@ -22,10 +26,26 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
         self.path = path
         self.filename = filename
         self.announcements: List[Announcement] = []
+        self.npoint_path = "https://api.npoint.io/9d12a7d9eaaad7543dbb"
+
+    def job_task_callback(announcement: Announcement, future: asyncio.Future):
+
+        if future.exception():
+            raise future.exception()
+
+    async def _npoint_load(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(self.npoint_path, raise_for_status=True) as resp:
+                try:
+                    data = await resp.json()
+                    return data
+                except JSONDecodeError as e:
+                    log.error(f"{self.npoint_path} is improperly formatted JSON {e}")
+                    raise
 
     async def cog_load(self) -> None:
         try:
-            self.start_all_jobs()
+            await self.start_all_jobs()
         except FileNotFoundError:
             log.warning(f"No Announcement Jobs started. Missing announcements file {self.path / self.filename}")
 
@@ -33,9 +53,9 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
         for guild_id in self.jobs.keys():
             self.stop_jobs(guild_id)
 
-    def start_all_jobs(self):
+    async def start_all_jobs(self):
         if not self.announcements:
-            self.announcements = self._load_announcements_from_file()
+            self.announcements = await self._load_announcements_from_npoint()
         self.start_jobs(*self.announcements)
 
     def stop_all_jobs(self):
@@ -52,15 +72,15 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
     @commands.has_role("Admin")
     @announcements.command()
     async def reloadall(self, ctx: commands.Context):
-        self.announcements = self._load_announcements_from_file()
+        self.announcements = await self._load_announcements_from_npoint()
         self.stop_all_jobs()
-        self.start_all_jobs()
+        await self.start_all_jobs()
         await ctx.send("All guild jobs reloaded and restarted")
 
     @commands.has_role("Admin")
     @announcements.command()
     async def reload(self, ctx: commands.Context):
-        self.announcements = self._load_announcements_from_file()
+        self.announcements = await self._load_announcements_from_npoint()
         jobs = [j for j in self.announcements if j.guild_id == ctx.guild.id]
         guild_id = ctx.guild.id
         self.stop_jobs(guild_id)
@@ -70,11 +90,13 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
     @reload.error
     @reloadall.error
     async def reload_error(self, ctx, error):
-        exception = error.original
+        exception: Exception = error.original
         if isinstance(exception, JSONDecodeError):
             await ctx.send("JSON file is not properly formatted")
         if isinstance(exception, FileNotFoundError):
             await ctx.send("No Announcement file to reload jobs from")
+        if isinstance(exception, CroniterBadCronError):
+            await ctx.send(f"The CRON Format in the JSON format is not properly formed {exception}")
         else:
             raise error
 
@@ -87,6 +109,10 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
             except JSONDecodeError as e:
                 log.error(f"{filename} is improperly formatted JSON {e}")
                 raise
+
+    async def _load_announcements_from_npoint(self) -> List[Announcement]:
+        data = await self._npoint_load()
+        return [Announcement(**v) for v in data]
 
     def _add_job(self, guild_id: int, job: aiocron.Cron):
         if guild_id not in self.jobs.keys():
@@ -104,14 +130,17 @@ class CronAnnouncementCog(ConfigMixin, commands.Cog):
         log.info(f"Stopped All Jobs for Guild {guild_id}")
 
     def _start_job(self, announcement: Announcement):
-        log.debug("in start job")
-        job = aiocron.Cron(announcement.crontab_fmt, self.make_announcement, args=(announcement,), start=True)
-        self._add_job(announcement.guild_id, job)
-        log.info("Starting CRON Job {} for Guild {} / Channel {}".format(
-            announcement.crontab_fmt,
-            announcement.guild_id,
-            announcement.channel_id
-        ))
+        try:
+            job = aiocron.Cron(announcement.crontab_fmt, self.make_announcement, args=(announcement,), start=True)
+            self._add_job(announcement.guild_id, job)
+        except CroniterBadCronError:
+            log.error(f"Invalid format for CRON Job {announcement}")
+        else:
+            log.info("Starting CRON Job {} for Guild {} / Channel {}".format(
+                announcement.crontab_fmt,
+                announcement.guild_id,
+                announcement.channel_id
+            ))
 
     def start_jobs(self, *announcements: Announcement):
         for a in announcements:
