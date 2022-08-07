@@ -1,12 +1,14 @@
 import asyncio
 import logging
 from copy import deepcopy
-from typing import Optional, Dict, NamedTuple, Union
+from typing import Optional, Dict, NamedTuple, Union, Any
 
+import aiohttp
 import discord
 from discord.ext import commands, tasks
 
 from mixins.config import ConfigMixin
+from tft.schema import CompetitionEntry
 from tft.services import fetch_page_source, find_active_competition, parse_with_soup, \
     get_competition_label, parse_competition, make_competition_embed
 
@@ -77,6 +79,37 @@ class CompetitionCog(ConfigMixin, commands.Cog):
             del self.config_settings[str(guild_id)]
             self.save_settings()
 
+    async def fetch_competition_rankings(self, competition_id: int, start: int = 0, length: int = 10):
+        def convert(o: Dict[str, Any], rank: int) -> CompetitionEntry:
+            return CompetitionEntry(
+                rank=rank,
+                name=o['nickname'],
+                roi=o['returnPct'],
+                back=o['backPct'],
+                prize=o['prize']
+            )
+        container = []
+        target = "{}/leaderboard/getleaderboarddata".format(self.competition_list_url)
+        headers = {
+            "accept": "application/json"
+        }
+        data = {
+            "competitionId": competition_id,
+            "start": start,
+            "length": length
+        }
+        try:
+            async with aiohttp.ClientSession(headers=headers) as session:
+                async with session.post(target, data=data) as resp:
+                    resp = await resp.json()
+                    for idx, o in enumerate(resp.get('data', [])):
+                        container.append(convert(o, idx+1))
+        except Exception as e:
+            log.error("Could not fetch competition listings")
+            log.error(e)
+        return container
+
+
 
     async def update(self):
         """Fetches HTML from TFT and parses it, and generates an embed."""
@@ -91,7 +124,7 @@ class CompetitionCog(ConfigMixin, commands.Cog):
         soup = parse_with_soup(competition_html)
         prize_pool = get_competition_label(soup, "prize pool") or "Not Found"
         remaining_contestants = get_competition_label(soup, "remaining contestants") or "Not Found"
-        entries = parse_competition(soup)[:10]
+        entries = await self.fetch_competition_rankings(competition_id)
         embed = make_competition_embed(entries, prize_pool, remaining_contestants)
         embed.set_footer(text=f"Updated every {self._update_minutes} minutes")
         self.embed = embed

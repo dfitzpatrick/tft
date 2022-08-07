@@ -60,6 +60,8 @@ def get_competition_label(soup: BeautifulSoup, label: str) -> Optional[str]:
 def parse_competition(soup: BeautifulSoup):
     container = []
     for item in soup(id='leaderboardBody'):
+        tds = item.find_all_next("td")
+        children = [c for c in item.children]
         rows = list(zip(*[iter(item("td"))]*5))
         for idx, row in enumerate(rows):
             rank = idx + 1

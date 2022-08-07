@@ -1005,7 +1005,7 @@ Competition Standings
 <th>Prize</th>
 </tr>
 </thead>
-<tbody id="leaderboardBody" style="width:100%">
+<tbody id="leaderboardBody" wtf="lol" style="width:100dsggdg%">
 <tr id="row0" class="first-highlight
                                             selected cursor-pointer" onclick="selectedUserChanged(24211, 5, 0)">
 <td class="rank">
@@ -90969,3 +90969,815 @@ Hypothetical or simulated performance results have certain limitations. Unlike a
 </div>
 </body>
 </html>"""
+
+competition_list = """
+
+<!DOCTYPE html>
+<html>
+<head>
+<title> The Funded Trader - August Competition</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<link rel="stylesheet" type="text/css" href="/styles/app.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link href="/images/favicon.png" rel="icon" type="image/x-icon" />
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="/styles/site.css" rel="stylesheet" />
+<link href="/font-awesome/css/fontawesome.css" rel="stylesheet" />
+<link href="/font-awesome/css/brands.css" rel="stylesheet" />
+<link href="/font-awesome/css/solid.css" rel="stylesheet" />
+<link href="/font-awesome/css/regular.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" rel="stylesheet" />
+<style>
+
+		.light-theme .small-board table.dataTable.display tbody td.dq {
+			color: red !important;
+		}
+	</style>
+<style>
+        .field-validation-error {
+            width: 100%;
+            margin-top: .25rem;
+            font-size: .875em;
+            color: #dc3545;
+        }
+
+        .input-validation-error {
+            border-color: #dc3545;
+            padding-right: calc(1.5em + .75rem);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(.375em + .1875rem) center;
+            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .dark-theme .header {
+            width: 100%;
+            background-color: #202330;
+            padding: 0 25px;
+        }
+
+      /*  .light-theme .header {
+            width: 100%;
+            background-color: #fff;
+            padding: 0 25px;
+        }*/
+
+        .dark-theme {
+            background-color: #202330;
+        }
+
+        .light-theme {
+            background-color: #fff;
+        }
+
+        .dark-theme .home-image {
+            background-color: #202330;
+        }
+
+        .light-theme .home-image {
+            background-color: #EBEDF5;
+        }
+    </style>
+</head>
+<body class="light-theme">
+<header class="header p-0 p-md-auto" style="">
+<div class="header_wrapper m-0 m-md-auto">
+<div class="header_info">
+<a href="https://thefundedtraderprogram.com/">
+<img class="header_info__logo" src="/images/TFT_Logo_Small.png" />
+</a>
+<div class="header_info__banner">
+</div>
+</div>
+<div class="col-lg-4 header_settings">
+<button type="button" class="header_settings__button" onclick="location.href='https://thefundedtraderprogram.com/#choose-your-path '" style="background-color:#ea983f">New Challenge</button>
+<div class="px-3">
+<a type="button" data-bs-target="#offcanvasRight" data-bs-toggle="offcanvas">
+<span class="fas fa-bars" style="font-size: 24px; padding-right: 15px; color: #2d388a;">
+</span>
+</a>
+</div>
+</div>
+</div>
+</header>
+<div class=" p-0 m-0 d-flex flex-lg-row flex-column flex-grow-1">
+<div class="col p-0">
+<main role="main" class=" p-0 d-flex flex-column flex-nowrap m-0 g-0 flex-grow-1">
+<div class="dashboard-head">
+<div class="dashboard-head_wrapper">
+<div class="dashboard-head_wrapper__breadcrumb">
+<span class="cursor-pointer" onclick="location.href='/'">
+<button class="rules__button">
+Competition List
+</button>
+</span>
+<span class="cursor-pointer" style="float:right">
+<button type="button" class="rules__button" data-ajax="true" data-ajax-mode="GET" data-ajax-url="/rules/11" data-ajax-update="#rulesModalContent" data-ajax-success="$('#rulesModalToggle').modal('show');">
+Rules
+</button>
+</span>
+</div>
+<div class="dashboard-head_wrapper__title">
+August Competition
+</div>
+<div class="dashboard-head_wrapper__labels-wrapper">
+<div class="label col-lg-3">
+<img src="/images/icons/icon-time.svg" class="label_icon" alt="" />
+<div class="label_title">
+Time Remaining </div>
+<div class="label_timer-block">
+<div class="timer countdown" data-date="2022-08-31T04:01:00">
+<div class="timer-item">
+<div class="number countdown_days">--</div>
+<div class="name">DAY</div>
+</div>
+<div class="timer-item">
+<div class="number countdown_hours">--</div>
+<div class="name">HR</div>
+</div>
+<div class="timer-item">
+<div class="number countdown_minutes">--</div>
+<div class="name">MIN</div>
+</div>
+<div class="timer-item">
+<div class="number countdown_seconds">--</div>
+<div class="name">SEC</div>
+</div>
+</div>
+</div>
+</div>
+<div class="label col-lg-3">
+<img src="/images/icons/icon-dollar.svg" class="label_icon" alt="" />
+<div class="label_title">Prize Pool</div>
+<div class="label_background-block">
+Challenge Accounts &#x2B; Discounts
+</div>
+</div>
+<div class="label col-lg-3">
+<img src="/images/icons/icon-users.svg" class="label_icon" alt="" />
+<div class="label_title">Remaining Contestants</div>
+<div class="label_background-block">
+6334 Out Of 11567
+</div>
+</div>
+<div class="label col-lg-3">
+<img src="/images/icons/icon-trophy.svg" class="label_icon" alt="" />
+<div class="label_title">Current Leader</div>
+<div class="label_background-block">
+BAMO11
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dashboard-main">
+<div class="dashboard-main_wrapper">
+<div class="row">
+<div class="col-lg-12 d-lg-flex">
+<div class="col-lg-5 col-md-5">
+<div id="leaderboardWrapper" class="dashboard-main_wrapper__board small-board" style="display: block">
+<div class="title">
+Competition Standings
+</div>
+<table id="leaderBoard" class="display" style="width:100%;">
+<thead>
+<tr>
+<th>Id</th>
+<th>Rank</th>
+<th>Nickname</th>
+<th>Return, %</th>
+<th>Back, %</th>
+<th>Prize</th>
+</tr>
+</thead>
+<tbody id="leaderboardBody" style="width:100%">
+</tbody>
+</table>
+</div>
+</div>
+<div class="col-lg-7 col-md-7">
+<div class="dashboard-main_wrapper__graph">
+<div class="d-flex justify-content-between">
+<div class="title">
+<span id="username"></span>
+Dashboard
+</div>
+<div class="chart-info">
+<div class="title">Rank: <span id="rank"></span></div>
+<div class="title">Back From Leader:<span id="backFromLeader"></span></div>
+</div>
+</div>
+<div class="d-lg-flex d-md-flex d-sm-flex">
+<div class="side-info">
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="currentEquity"></span>
+</div>
+<div class="side-info_block__text">
+Current Equity
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="currentBalance"></span>
+</div>
+<div class="side-info_block__text">
+Current Balance
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="startingBalance"></span>
+</div>
+<div class="side-info_block__text">
+Starting Balance
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="cumulativePnL"></span>
+</div>
+<div class="side-info_block__text">
+Cumulative PnL
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="percentReturn"></span>
+</div>
+<div class="side-info_block__text">
+% Return
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="highestRank"></span>
+</div>
+<div class="side-info_block__text">
+Highest Rank
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="mostTradedProduct"></span>
+</div>
+<div class="side-info_block__text">
+Most Traded Product
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="largestWinningTrade"></span>
+</div>
+<div class="side-info_block__text">
+Largest Winning Trade
+</div>
+</div>
+<div class="side-info_block">
+<div class="side-info_block__number">
+<span id="winRate"></span>
+</div>
+<div class="side-info_block__text">
+Win Rate
+</div>
+</div>
+</div>
+<div id="chart"></div>
+<div id="chartDark"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row m-t-10">
+<div class="col-lg-12">
+<div class="dashboard-main_wrapper__board wide-board">
+<div id="closedTradesTable">
+<div class="title">
+<span id="username"></span> Closed Trades
+</div>
+<div id="closedTradesWrapper">
+<table id="closedTrades" class="display" style="width:100%">
+<thead>
+<tr>
+<th>Deal</th>
+<th>Open Time</th>
+<th>Open Price</th>
+<th>Close Time</th>
+<th>Close Price</th>
+<th>Side</th>
+<th>Symbol</th>
+<th>Volume</th>
+<th>Profit</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="rulesModalToggle" aria-hidden="true" aria-labelledby="rulesModalToggleLabel" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content" id="rulesModalContent">
+</div>
+</div>
+</div>
+<script>
+
+
+
+</script>
+</main>
+<div class="row gx-0 align-items-end" style="font-size:30px;">
+<div class=" text-center">
+</div>
+</div>
+</div>
+<div class="offcanvas offcanvas-end" id="offcanvasRight" data-bs-backdrop="false" style="background-color: #404042; max-width: 350px">
+<div class="offcanvas-header">
+<a type="button" class="" data-bs-dismiss="offcanvas" aria-label="Close">
+<span class="far fa-window-close" style="color:white; font-size:36px"></span>
+</a>
+</div>
+<div class="offcanvas-body">
+<div id="sidebar" class="">
+<ul class="nav btn-group-vertical">
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/">
+<i class="fas fa-caret-right"></i>
+ <span class="ms-1">HOME</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/about-us/">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">ABOUT US</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/#choose-your-path">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">PRICING</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://competitions.thefundedtraderprogram.com/">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">COMPETITIONS</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://leaderboard.thefundedtraderprogram.com">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">LEADERBOARD</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/trading-view/">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">TRADINGVIEW CHART</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/faq/">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">FAQ</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/my-account/affiliate-area/">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">AFFILIATE PROGRAMS</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/my-account/">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">MY ACCOUNT</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://thefundedtraderprogram.com/our-partners/">
+<i class="fas fa-caret-right"></i>
+<span class="ms-1">OUR PARTNERS</span>
+</a>
+</li>
+</ul>
+<div style="position: fixed; bottom: 25px;">
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="footer">
+<div class=" footer_header ">
+<div class="d-flex flex-row justify-content-center align-items-center" style="height:100%;">
+<div>
+<a class="px-3 fs-1 fab fa-instagram" style="color:white; text-decoration: none;" href="https://www.instagram.com/thefundedtrader/">
+</a>
+</div>
+<div>
+<a class="px-3 fs-1 fab fa-telegram-plane" style="color:white; text-decoration: none;" href="https://t.me/thefundedtraderprogram">
+</a>
+</div>
+<div>
+<a class="px-3 fs-1 fab fa-discord" style="color:white; text-decoration: none;" href="https://discord.gg/wC7wTacEqM">
+</a>
+</div>
+<div>
+<a class="px-3 fs-1 fab fa-youtube" style="color:white; text-decoration: none;" href="https://www.youtube.com/c/thefundedtrader">
+</a>
+</div>
+</div>
+</div>
+<div class="footer_body ">
+<div class="footer_inner-content">
+<div class="row g-0 py-5">
+<div class="col-12 col-xxl-3 ps-0 ps-xxl-5 align-self-auto">
+<img src="/images/TFT_Logo_Small_Light.png" width="auto" height="100px" />
+</div>
+<div class="col-12 col-xxl-3 px-2 my-2 my-xxl-0">
+<h4 style="font-weight:normal"> Disclaimer</h4>
+<br />
+<div style="font-size:11px;">
+All content published and distributed by The Funded Trader LLC, The Funded Trader, and its affiliates (collectively, the “Company”) is to be treated as general information only. None of the information provided by the Company or contained herein is intended as investment advice, an offer or solicitation of an offer to buy or sell, or a recommendation, endorsement, or sponsorship of any security, company, or fund.
+<br />
+<br />
+Use of the information contained on the Company’s websites is at your own risk and the Company and assumes no responsibility or liability for any use or misuse of such information. Nothing contained herein is a solicitation or an offer to buy or sell futures, options, or forex. Past performance is not necessarily indicative of future results.
+</div>
+<br />
+<div>
+<button type="button" class="header_settings__button" data-bs-toggle="modal" data-bs-target="#cftcModal">CFTC 4.41 Rule</button>
+</div>
+</div>
+<div class="col-12 col-xxl-3 px-2 my-2 my-xxl-0">
+<h4 style="font-weight:normal"> Get in Touch</h4>
+<br />
+<div class="my-1 mt-0 text-break">
+<a href="/cdn-cgi/l/email-protection#077472777768757347736f626172696362637375666362757775686075666a2964686a" style="text-decoration:none; color:white;"><span class="__cf_email__" data-cfemail="0c7f797c7c637e784c7864696a7962686968787e6d68697e7c7e636b7e6d61226f6361">[email&#160;protected]</span></a>
+</div>
+<div class="my-3">
+<a href="https://thefundedtraderprogram.com/contact-us/" style="text-decoration: none; color:white;">
+Contact Us
+</a>
+</div>
+</div>
+<div class="col-12 col-xxl-3 px-2 my-2 my-xxl-0">
+<div class="row">
+<div class="col-6">
+<h4 style="font-weight:normal">Quick Links</h4>
+<br />
+<div class="my-3 mt-0">
+<a href="https://thefundedtraderprogram.com/about-us/" style="text-decoration: none; color:white;">
+About Us
+</a>
+</div>
+<div class="my-3">
+<a href="https://thefundedtraderprogram.com/#choose-your-path" style="text-decoration: none; color:white;">
+Pricing
+</a>
+</div>
+<div class="my-3">
+<a href="https://competitions.thefundedtraderprogram.com/" style="text-decoration: none; color:white;">
+Competitions
+</a>
+</div>
+<div class="my-3">
+<a href="https://leaderboard.thefundedtraderprogram.com" style="text-decoration: none; color:white;">
+Leaderboard
+</a>
+</div>
+<div class="my-3">
+<a href="https://thefundedtraderprogram.com/our-partners/" style="text-decoration: none; color:white;">
+Our Partners
+</a>
+</div>
+</div>
+<div class="col-6">
+<h4 style="font-weight:normal"> Legal</h4>
+<br />
+<div class="my-3 mt-0">
+<a href="https://thefundedtraderprogram.com/privacy-policy" style="text-decoration: none; color:white;">
+Privacy Policy
+</a>
+</div>
+<div class="my-3">
+<a href=" https://thefundedtraderprogram.com/refund-policy/" style="text-decoration: none; color:white;">
+Refund Policy
+</a>
+</div>
+<div class="my-3">
+<a href="https://thefundedtraderprogram.com/terms-of-use/" style="text-decoration: none; color:white;">
+Terms of Use
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>var dateStart = new Date("2022-08-07T17:53:12");</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="/js/countdown.min.js"></script>
+<script src="/js/jquery-validate/jquery.validate.min.js"></script>
+<script src="/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="/js/jquery-validate/additional-methods.min.js"></script>
+<script>
+    $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+
+        if (jqXHR.status == 422) {
+            if (jqXHR.responseJSON && jqXHR.responseJSON.redirect) {
+                window.location.href = jqXHR.responseJSON.redirect;
+            }
+        }
+
+        if (jqXHR.status == 401) {
+            window.location.reload();
+        }
+    });
+</script>
+<script>
+            window.intercomSettings = {
+        api_base: "https://api-iam.intercom.io",
+        app_id: "jf57cng1"
+      };
+    </script>
+<script>
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/jf57cng1';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+<script src="/js/countdown.min.js"></script>
+<script src="/js/countdownSetup.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script>
+
+		var leaderboard;
+		var competitionLeaderboardClosedTradesTable;
+		var selectedAccountId;
+		$(document).ready(function() {
+			var competitorTablePageLength = 10;
+			var competitorTableDisplayStart = ($('#leaderBoard').find("tbody > tr.selected").index() / competitorTablePageLength | 0) * competitorTablePageLength;
+			var tradeTablePageLength = 10;
+
+			//leaderboard = $('#leaderBoard').on("draw.dt", function() {
+			//	var element = $("#leaderboardWrapper");
+			//	element.css("display", "block");
+			//}).DataTable({
+			//	"ordering": false,
+			//	"lengthChange": false,
+			//	"language": {
+			//		"search": "",
+			//		"searchPlaceholder": "Search",
+			//	},
+			//	"scrollX": true,
+			//	"pageLength": competitorTablePageLength,
+			//	"displayStart": competitorTableDisplayStart,
+			//	"paging": competitorTablePageLength < 11567,
+			//	"info": true,
+			//	"viewTotal": true,
+			//	"responsive": true,
+			//	"drawCallback": function(settings) {
+			//		//wrapper.css("display", "block");
+			//	}
+			//});
+
+			leaderboard = $('#leaderBoard').DataTable({
+				info: true,
+				lengthChange: false,
+				ordering: false,
+				processing: false,
+				pageLength: 10,
+				paging: true,
+				searching: true,
+				serverSide: true,
+				viewTotal: true,
+				scrollX: true,
+
+				language: {
+					search: "",
+					searchPlaceholder: "Search",
+				},
+				responsive: true,
+				//searchDelay: 500,
+				ajax: {
+					url: "/leaderboard/getleaderboarddata",
+					method: "POST",
+					dataType: 'json',
+					data: {
+						competitionId: '11'
+					},
+					//dataSrc: function (response) {
+					//	response.recordsTotal = response.info.length;
+					//	response.recordsFiltered = response.info.length;
+					//	response.draw = 1;
+					//	return response.info;
+					//}
+				},
+				//deferLoading: numCompetitors,
+				columns: [
+					{ data: 'id', name: "Id" },
+					{
+						data: 'rank', name: 'Rank', className: 'rank', createdCell: function(td, cellData, rowData, row, col) {
+							if (cellData == 'DQ') {
+								td.classList.add("dq");
+							}
+						}
+					},
+					{ data: 'nickname', name: 'Nickname', className: 'user' },
+					{ data: 'returnPct', name: 'Return, %', className: 'lg-font' },
+					{ data: 'backPct', name: 'Back, %', className: 'lg-font' },
+					{ data: 'prize', name: 'Prize', className: 'prize' },
+				],
+				columnDefs: [{
+					targets: [0],
+					visible: false,
+					searchable: false
+				}],
+				rowId: 'id',
+				select: {
+					info: true,
+					style: 'single'
+				},
+				createdRow: function(row, data, index) {
+					if (data.rank == '1st - King/Queen') {
+						$(row).addClass('first-highlight');
+					}
+					else if (data.rank == '2nd - Heir') {
+						$(row).addClass('second-highlight');
+					}
+					else if (data.rank == '3rd - Grand Diplomat') {
+						$(row).addClass('third-highlight');
+					}
+				},
+
+
+			}).columns.adjust();
+
+			competitionLeaderboardClosedTradesTable = $('#closedTrades').DataTable({
+				info: true,
+				lengthChange: false,
+				ordering: false,
+				processing: false,
+				pageLength: 10,
+				paging: true,
+				searching: false,
+				serverSide: false,
+				scrollX: true,
+				columns: [
+					{ data: 'deal', name: "Deal", className: 'user' },
+					{ data: 'openTime', name: 'Open Time', className: 'user' },
+					{ data: 'openPrice', name: 'Open Price', className: 'user' },
+					{ data: 'closeTime', name: 'Close Time', className: 'user' },
+					{ data: 'closePrice', name: 'Close Price', className: 'user' },
+					{
+						data: 'side', name: 'Side', className: 'user', createdCell: function(nTd, sData, oData, iRow, iCol) {
+							var html = "";
+							if (sData == "Buy") {
+								html = '<div class=" green-label"> Buy </div>';
+							}
+							else {
+								html = '<div class=" red-label"> Sell </div>';
+							}
+							$(nTd).html(html);
+
+						}
+					},
+					{ data: 'symbol', name: 'symbol', className: 'user' },
+					{ data: 'volume', name: 'volume', className: 'user' },
+					{ data: 'profit', name: 'profit', className: 'user' },
+
+				],
+				columnDefs: [{
+					targets: [0],
+					visible: false,
+					searchable: false
+				}],
+				rowId: 'id',
+				select: {
+					info: true,
+					style: 'single'
+				},
+				createdRow: function(row, data, index) {
+
+				}
+			});
+
+			selectedUserChanged(59547);
+		});
+
+		$("#leaderBoard tbody").on("click", "tr", function() {
+			selectedUserChanged(this.id)
+		});
+
+		function selectedUserChanged(accountId, newIndex) {
+			//var id = e.currentTarget.id
+			$.ajax({
+				method: "GET",
+				url: "/leaderboard/getclosedtradesdata",
+				data: { id: accountId }
+			}).done(function(data) {
+				competitionLeaderboardClosedTradesTable.clear();
+				data.data.forEach(element => competitionLeaderboardClosedTradesTable.row.add({
+					"deal": element.deal,
+					"openPrice": element.openPrice,
+					"openTime": element.openTime,
+					"closePrice": element.closePrice,
+					"closeTime": element.closeTime,
+					"side": element.side,
+					"symbol": element.symbol,
+					"volume": element.volume,
+					"profit": element.profit
+				}));
+
+				$("#" + selectedAccountId).removeClass('selected');
+
+				competitionLeaderboardClosedTradesTable.draw();
+				$('#closedTradesUsername').text(data.username);
+				$("#" + accountId).addClass('selected');
+				selectedAccountId = accountId;
+			});
+
+			$.ajax({
+				method: "GET",
+				url: "/leaderboard/getbalanceequitydata",
+				data: { accountId: accountId }
+			}).done(function(data) {
+				drawChart(data.currentMetric.labels, data.currentMetric.equities, data.currentMetric.balances);
+				updateChart(data.currentMetric.labels, data.currentMetric.equities, data.currentMetric.balances);
+
+				//chartManager.updateMultiSeries("#leaderboardChart", data.balanceEquityItems);
+				$('#currentBalance').text(data.currentMetric.balance);
+				$('#currentEquity').text(data.currentMetric.equity);
+				$('#backFromLeader').text(data.currentMetric.backFromLeader);
+				$('#rank').text(data.currentMetric.rank);
+				$('#winRate').text(data.currentMetric.winningTradePct);
+				$('#totalNumTrades').text(data.currentMetric.totalNumTrades);
+				$('#hwm').text(data.currentMetric.hwm);
+				$('#highestRank').text(data.currentMetric.highestRank);
+				$('#startingBalance').text(data.currentMetric.startingBalance);
+				$('#cumulativePnL').text(data.currentMetric.cumulativePnl);
+				$('#percentReturn').text(data.currentMetric.percentReturn);
+				$('#largestWinningTrade').text(data.currentMetric.largestWinningTrade);
+				$('#mostTradedProduct').text(data.currentMetric.mostTradedProduct);
+			});
+
+		}
+
+
+
+	</script>
+<script>
+		var chartLabels = ["2022-07-31","2022-08-01","2022-08-02","2022-08-03","2022-08-04","2022-08-05","2022-08-06","2022-08-07"];
+		var chartEquities = [100000.0000000000,138467.7300000000,350312.9900000000,328366.4000000000,328370.4200000000,328370.3900000000,328370.3900000000,328370.3900000000];
+		var chartBalances = [100000.0000000000,99550.0000000000,209617.4400000000,328366.4000000000,328370.4200000000,328370.3900000000,328370.3900000000,328370.3900000000];
+
+
+	</script>
+<script src="/js/site.js"></script>
+<script src="/js/jquery.unobtrusive-ajax.js"></script>
+<script>
+        //var table = $('#leaderboardWrapper');
+        //table.css("display", "none");
+    </script>
+<div id="cftcModal" class="modal fade" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header text-center">
+<h4 class="modal-title text-center"> CFTC Rule 4.41</h4>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<p>
+Hypothetical or simulated performance results have certain limitations. Unlike an actual performance record, simulated results do not represent actual trading. Also, because the trades have not actually been executed, the results may have under-or-over compensated for the impact, if any, of certain market factors, such as lack of liquidity. Simulated trading programs, in general, are also subject to the fact that they are designed with the benefit of hindsight. No representation is being made that any account will or is likely to achieve profit or losses similar to those shown. CFTC Rule 4.41
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>"""
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(competition_list, 'html.parser')
