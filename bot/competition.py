@@ -140,7 +140,7 @@ class CompetitionCog(ConfigMixin, commands.Cog):
             return MessageInfo(channel_id=o[0], message_id=o[1])
         return o
 
-    @tasks.loop(minutes=_update_minutes)
+    @tasks.loop(minutes=_update_minutes, reconnect=True)
     async def update_task(self):
         """The actual polling task. To change the time, change _update_minutes at the top of this file"""
         await self.bot.wait_until_ready()
